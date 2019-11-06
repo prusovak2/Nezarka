@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Text;
 
 [assembly: System.Runtime.CompilerServices.InternalsVisibleTo("NezarkaTests")]
 namespace NezarkaBookstore
@@ -7,7 +9,15 @@ namespace NezarkaBookstore
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Stream s = Console.OpenStandardInput();
+            Stream o = Console.OpenStandardOutput();
+            StreamReader r = new StreamReader(s);
+            string line =r.ReadLine();
+            StreamWriter w = new StreamWriter(o);
+            w.AutoFlush = true;
+            Console.SetOut(w);
+            w.WriteLine(line);
+            
         }
     }
 }

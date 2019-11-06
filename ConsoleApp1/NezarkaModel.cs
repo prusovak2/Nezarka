@@ -9,7 +9,7 @@ namespace NezarkaBookstore
     //
     // Model
     //
-
+//TODO:check dupliated id!!
     class ModelStore
     {
         private List<Book> books = new List<Book>();
@@ -54,7 +54,7 @@ namespace NezarkaBookstore
                         break;
                     }
 
-                    string[] tokens = line.Split(';');
+                    string[] tokens = line.Split(';', StringSplitOptions.RemoveEmptyEntries);
                     switch (tokens[0])
                     {
                         case "BOOK":
@@ -106,7 +106,7 @@ namespace NezarkaBookstore
                                 Console.WriteLine("Data error.");
                                 return null;
                             }
-                            if(ShoppingCartItem.TryParse(tokens[2], tokens[3], out ShoppingCartItem s))
+                            if(ShoppingCartItem.TryParse(tokens[2], tokens[3], store, out ShoppingCartItem s))
                             {
                                 customer.ShoppingCart.Items.Add(s);
                             }
@@ -186,7 +186,7 @@ namespace NezarkaBookstore
             }
             set
             {
-                shoppingCart = value;
+                shoppingCart = value;             
             }
         }
         public static bool TryParse(string id1, string name2, string surname3, out Customer c)
@@ -203,6 +203,7 @@ namespace NezarkaBookstore
                 LastName = surname3
             };
             return true;
+            
         }
     }
 
@@ -211,9 +212,15 @@ namespace NezarkaBookstore
         public int BookId { get; set; }
         public int Count { get; set; }
 
-        public static bool TryParse(string bookId1, string count2, out ShoppingCartItem s)
+        public static bool TryParse(string bookId1, string count2, ModelStore store, out ShoppingCartItem s)
         {
             if (!Int32.TryParse(bookId1, out int bookId))
+            {
+                s = null;
+                return false;
+            }
+            Book b = store.GetBook(bookId);
+            if (b == null)
             {
                 s = null;
                 return false;
