@@ -72,5 +72,27 @@ namespace NezarkaTests
             bool b = Utils.FileDiff(@"TestFiles\Outs\BookInfo.html", @"TestFiles\BookInfo.txt");
             Assert.IsTrue(b);
         }
+        [TestMethod]
+        public void GenBookListTests()
+        {
+            StreamWriter sw = new StreamWriter(@"TestFiles\Outs\BookList.html");
+            List < Book > books= new List<Book>();
+            for (int i = 0; i < 7; i++)
+            {
+                Book book = new Book(){
+                Id = i,
+                Title = $"Title{i}",
+                Author = $"Author{i}",
+                Price = i,
+            };
+                books.Add(book);
+            }
+            
+
+            View.GenBookList(sw,"Kachna", 42, books);
+            sw.Close();
+            bool b = Utils.FileDiff(@"TestFiles\Outs\BookList.html", @"TestFiles\BookList.txt");
+            Assert.IsTrue(b);
+        }
     }
 }

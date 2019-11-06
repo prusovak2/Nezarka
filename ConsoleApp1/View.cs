@@ -9,7 +9,7 @@ namespace NezarkaBookstore
     public static class View
     {
         internal static readonly CultureInfo StdCulture = new CultureInfo("en-US");
-        public static void GenFirstHead(TextWriter writer)
+        internal static void GenFirstHead(TextWriter writer)
         {
             writer.WriteLine(@"<!DOCTYPE html>");
             writer.WriteLine("<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">");
@@ -39,11 +39,51 @@ namespace NezarkaBookstore
             GenCommonHeader(writer, CustFirtsName, NumItems);
             GenBookInfoBody(writer, BookName, Author, Price);
         }
-        public static void GenBookList(TextWriter writer, string CustFirtsName, int NumItems)
+        public static void GenBookList(TextWriter writer, string CustFirtsName, int NumItems, List<Book> books)
         {
             GenFirstHead(writer);
             GenStyle(writer);
             GenCommonHeader(writer, CustFirtsName, NumItems);
+            GenBooksTable(writer, books);
+        }
+
+        internal static void GenBooksTable(TextWriter writer, List<Book> Books)
+        {
+            writer.WriteLine("	Our books for you:");
+            writer.WriteLine("	<table>");
+
+            int BookCounter = 0;
+            while (BookCounter < Books.Count)
+            {
+                writer.WriteLine("		<tr>");
+                for (int i = 0; i < 3; i++)
+                {
+                    if (BookCounter < Books.Count)
+                    {
+                        GenBookRecord( writer, BookCounter, Books[BookCounter]);
+                        BookCounter++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                writer.WriteLine("		</tr>");
+            }
+            writer.WriteLine("	</table>");
+            writer.WriteLine("</body>");
+            writer.WriteLine("</html>");
+            writer.Flush();
+
+        }
+        internal static void GenBookRecord(TextWriter writer, int counter, Book book) 
+        {
+            writer.WriteLine("			<td style=\"padding: 10px;\">");
+            writer.WriteLine($"				<a href=\"/Books/Detail/{counter}\">{book.Title}</a><br />");
+            writer.WriteLine($"				Author: {book.Author}<br />");
+            writer.WriteLine($"				Price: {book.Price.ToString(StdCulture)} EUR &lt;<a href=\"/ShoppingCart/Add/{counter}\">Buy</a>&gt;");
+            writer.WriteLine("			</td>");
+            writer.Flush();
         }
         internal static void GenStyle(TextWriter writer)
         {
@@ -86,6 +126,10 @@ namespace NezarkaBookstore
             writer.WriteLine("</body>");
             writer.WriteLine("</html>");
             writer.Flush();
+        }
+        public static void GenCart()
+        {
+
         }
     }
 }
