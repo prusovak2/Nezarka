@@ -10,8 +10,7 @@ namespace NezarkaBookstore
     //
     // Model
     //
-//TODO:check dupliated id!!
-//TODO: validni kladne pocty knih?
+
     public class ModelStore
     {
         internal List<Book> books = new List<Book>();
