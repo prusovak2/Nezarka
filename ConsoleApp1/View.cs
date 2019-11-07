@@ -32,12 +32,12 @@ namespace NezarkaBookstore
             GenFirstHead(writer);
             GenBodyOfInvalidRequest(writer);
         }
-        public static void GenBookDetail(TextWriter writer, string CustFirtsName, int NumItems ,string BookName, string Author, decimal Price)
+        public static void GenBookDetail(TextWriter writer, string CustFirtsName, int NumItems ,string BookName, string Author, decimal Price, int bookID)
         {
             GenFirstHead(writer);
             GenStyle(writer);
             GenCommonHeader(writer, CustFirtsName, NumItems);
-            GenBookInfoBody(writer, BookName, Author, Price);
+            GenBookInfoBody(writer, BookName, Author, Price, bookID);
         }
         public static void GenBookList(TextWriter writer, string CustFirtsName, int NumItems, List<Book> books)
         {
@@ -114,7 +114,7 @@ namespace NezarkaBookstore
             writer.WriteLine("	</table>");
             writer.Flush();
         }
-        static internal void GenBookInfoBody(TextWriter writer, string BookName, string Author, decimal Price)
+        static internal void GenBookInfoBody(TextWriter writer, string BookName, string Author, decimal Price, int bookID)
         {           
             writer.WriteLine("	Book details:");
             writer.WriteLine($"	<h2>{BookName}</h2>");
@@ -122,7 +122,7 @@ namespace NezarkaBookstore
             writer.WriteLine($"	Author: {Author}<br />");
             writer.WriteLine($"	Price: {Price.ToString(StdCulture)} EUR<br />");
             writer.WriteLine("	</p>");
-            writer.WriteLine("	<h3>&lt;<a href=\"/ShoppingCart/Add/3\">Buy this book</a>&gt;</h3>");
+            writer.WriteLine($"	<h3>&lt;<a href=\"/ShoppingCart/Add/{bookID}\">Buy this book</a>&gt;</h3>");
             writer.WriteLine("</body>");
             writer.WriteLine("</html>");
             writer.Flush();

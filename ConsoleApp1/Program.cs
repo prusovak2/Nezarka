@@ -19,7 +19,8 @@ namespace NezarkaBookstore
             ModelStore Store = ModelStore.LoadFrom(Reader);
             if (Store == null)
             {
-                //check null
+                Writer.WriteLine("Data error."); //TODO:remove
+                Writer.Flush();
                 return;
             }
             Controler.ReadAdnDoRequests(Reader, Writer, Store);

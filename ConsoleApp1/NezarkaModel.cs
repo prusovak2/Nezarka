@@ -59,17 +59,18 @@ namespace NezarkaBookstore
 
             try
             {
-                if (reader.ReadLine() != "DATA-BEGIN")
+                string line = reader.ReadLine();
+                if (line != "DATA-BEGIN")
                 {
-                    Console.WriteLine("Data error.");
+                    //Console.WriteLine("Data error.");                    
                     return null;
                 }
                 while (true)
                 {
-                    string line = reader.ReadLine();
+                     line = reader.ReadLine();
                     if (line == null)
                     {
-                        Console.WriteLine("Data error.");
+                        //Console.WriteLine("Data error.");
                         return null;
                     }
                     else if (line == "DATA-END")
@@ -83,7 +84,7 @@ namespace NezarkaBookstore
                         case "BOOK":
                             if (tokens.Length != 5)
                             {
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             if (Book.TryParse(tokens[1], tokens[2], tokens[3], tokens[4], out Book b,  store))
@@ -92,14 +93,14 @@ namespace NezarkaBookstore
                             }
                             else //parse failed, number was expected
                             { 
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             break;
                         case "CUSTOMER":
                             if (tokens.Length != 4)
                             {
-                                Console.WriteLine("Data error.");
+                               // Console.WriteLine("Data error.");
                                 return null;
                             }
                             if (Customer.TryParse(tokens[1], tokens[2], tokens[3], out Customer c, store))
@@ -108,25 +109,25 @@ namespace NezarkaBookstore
                             }
                             else //parse failed, number was expected
                             {
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             break;
                         case "CART-ITEM":
                             if (tokens.Length != 4)
                             {
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             if(!Int32.TryParse(tokens[1], out int custID))
                             {
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             var customer = store.GetCustomer(custID);
                             if (customer == null)
                             {
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             if(ShoppingCartItem.TryParse(tokens[2], tokens[3], store, out ShoppingCartItem s))
@@ -135,12 +136,12 @@ namespace NezarkaBookstore
                             }
                             else //parse failed, number was expected
                             {
-                                Console.WriteLine("Data error.");
+                                //Console.WriteLine("Data error.");
                                 return null;
                             }
                             break;
                         default:
-                            Console.WriteLine("Data error.");
+                            //Console.WriteLine("Data error.");
                             return null;
                     }
                 }
@@ -149,6 +150,7 @@ namespace NezarkaBookstore
             {
                 if (ex is FormatException || ex is IndexOutOfRangeException)
                 {
+                   // Console.WriteLine("Data error.");
                     return null;
                 }
                 throw;

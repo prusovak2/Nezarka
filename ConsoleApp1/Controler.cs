@@ -18,10 +18,10 @@ namespace NezarkaBookstore
 
             char[] delims = new char[] { ' ', '/' };
 
-           // bool first = true;
+            // bool first = true;
 
-            string line = "";
-            while ((line = reader.ReadLine()) != null)
+            string line = reader.ReadLine();
+            while (line != null && line !="")
             {
                 string[] Records = line.Split(delims, StringSplitOptions.RemoveEmptyEntries);
                 /*if (!first)
@@ -37,8 +37,10 @@ namespace NezarkaBookstore
                     if (cust == null)
                     {
                         View.GenInvalidRequest(writer);
-                        
-                        break;
+                        writer.WriteLine("====");
+                        writer.Flush();
+                        line = reader.ReadLine();
+                        continue;
                     }
                     string firstName = cust.FirstName;
                     List<Book> Books = store.GetBooks();
@@ -54,12 +56,16 @@ namespace NezarkaBookstore
                     if (cust == null || b==null)
                     {
                         View.GenInvalidRequest(writer);
-                        break;
+                        writer.WriteLine("====");
+                        writer.Flush();
+                        line = reader.ReadLine();
+                        continue;
+                        
                     }
                     string firstNsame = cust.FirstName;
                     int numItems = cust.CountItemsInCart();
                                       
-                    View.GenBookDetail(writer, firstNsame, numItems, b.Title, b.Author, b.Price);
+                    View.GenBookDetail(writer, firstNsame, numItems, b.Title, b.Author, b.Price, b.Id);
                 }
                 else if (ShopingCart.Match(line).Length > 0)
                 {
@@ -68,14 +74,20 @@ namespace NezarkaBookstore
                     if (cust == null)
                     {
                         View.GenInvalidRequest(writer);
-                        break;
+                        writer.WriteLine("====");
+                        writer.Flush();
+                        line = reader.ReadLine();
+                        continue;
                     }
 
                     string firstName = cust.FirstName;
                     if (cust.CountItemsInCart() == 0)
                     {
                         View.GenCartEmpty(writer, firstName);
-                        break;
+                        writer.WriteLine("====");
+                        writer.Flush();
+                        line = reader.ReadLine();
+                        continue;
                     }
                     List<ShoppingCartItem> cart = cust.GetCart();
 
@@ -90,7 +102,10 @@ namespace NezarkaBookstore
                     if (cust == null || b == null)
                     {
                         View.GenInvalidRequest(writer);
-                        break;
+                        writer.WriteLine("====");
+                        writer.Flush();
+                        line = reader.ReadLine();
+                        continue;
                     }
                     //TODO: create shopping cart?
                     cust.ShoppingCart.AddItem(bookID);
@@ -110,7 +125,10 @@ namespace NezarkaBookstore
                     if (cust == null || b == null)
                     {
                         View.GenInvalidRequest(writer);
-                        break;
+                        writer.WriteLine("====");
+                        writer.Flush();
+                        line = reader.ReadLine();
+                        continue;
                     }
                     bool RemoveSuccesful = cust.ShoppingCart.RemoveItem(bookID);
                     if (RemoveSuccesful)
@@ -120,7 +138,10 @@ namespace NezarkaBookstore
                         if (cust.CountItemsInCart() == 0)
                         {
                             View.GenCartEmpty(writer, firstName);
-                            break;
+                            writer.WriteLine("====");
+                            writer.Flush();
+                            line = reader.ReadLine();
+                            continue;
                         }
                         View.GenCart(writer, firstName, cart, store);
                     }
@@ -134,7 +155,8 @@ namespace NezarkaBookstore
                     View.GenInvalidRequest(writer);
                 }
                 writer.WriteLine("====");
-                // line = reader.ReadLine();
+                writer.Flush();
+                line = reader.ReadLine();
             }
         }
     }

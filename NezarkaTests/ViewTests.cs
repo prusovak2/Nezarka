@@ -50,7 +50,7 @@ namespace NezarkaTests
         public void GenBookInfoBodyTests()
         {
             StreamWriter sw = new StreamWriter(@"TestFiles\Outs\BookInfoBody.html");
-            View.GenBookInfoBody(sw, "HP", "JKR", (decimal)4.2);
+            View.GenBookInfoBody(sw, "HP", "JKR", (decimal)4.2, 3);
             sw.Close();
             bool b = Utils.FileDiff(@"TestFiles\Outs\BookInfoBody.html", @"TestFiles\BookInfoBody.txt");
             Assert.IsTrue(b);
@@ -67,7 +67,7 @@ namespace NezarkaTests
         public void GenBookInfoTests()
         {
             StreamWriter sw = new StreamWriter(@"TestFiles\Outs\BookInfo.html");
-            View.GenBookDetail(sw, "Kachna", 42, "HP", "JKR", (decimal)4.2);
+            View.GenBookDetail(sw, "Kachna", 42, "HP", "JKR", (decimal)4.2,3);
             sw.Close();
             bool b = Utils.FileDiff(@"TestFiles\Outs\BookInfo.html", @"TestFiles\BookInfo.txt");
             Assert.IsTrue(b);
