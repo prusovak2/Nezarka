@@ -7,16 +7,23 @@ namespace NezarkaBookstore
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            Stream s = Console.OpenStandardInput();
-            Stream o = Console.OpenStandardOutput();
-            StreamReader r = new StreamReader(s);
-            string line =r.ReadLine();
-            StreamWriter w = new StreamWriter(o);
-            w.AutoFlush = true;
-            Console.SetOut(w);
-            w.WriteLine(line);
+            Stream InputStrem = Console.OpenStandardInput();
+            Stream Outputstream = Console.OpenStandardOutput();
+            StreamReader Reader = new StreamReader(InputStrem);            
+            StreamWriter Writer = new StreamWriter(Outputstream);
+            //Writer.AutoFlush = true;
+            Console.SetOut(Writer);
+            ModelStore Store = ModelStore.LoadFrom(Reader);
+            if (Store == null)
+            {
+                //check null
+                return;
+            }
+            Controler.ReadAdnDoRequests(Reader, Writer, Store);
+            
             
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.IO;
+using System.Linq;
 
 namespace NezarkaBookstore
 {
@@ -10,24 +11,46 @@ namespace NezarkaBookstore
     // Model
     //
 //TODO:check dupliated id!!
-    class ModelStore
+//TODO: validni kladne pocty knih?
+    public class ModelStore
     {
-        private List<Book> books = new List<Book>();
+        internal List<Book> books = new List<Book>();
         private List<Customer> customers = new List<Customer>();
 
-        public IList<Book> GetBooks()
+        public List<Book> GetBooks()
         {
             return books;
         }
 
         public Book GetBook(int id)
         {
-            return books.Find(b => b.Id == id);
+            if (IsBook(id))
+            {
+                return books.Find(b => b.Id == id);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public Customer GetCustomer(int id)
         {
-            return customers.Find(c => c.Id == id);
+            if (IsCustomer(id))
+            {
+                return customers.Find(c => c.Id == id);
+            }
+            return null;
+        }
+
+        public bool IsCustomer(int id)
+        {
+            return (customers.Where(x => x.Id == id).Count() == 1);
+        }
+
+        public bool IsBook(int id)
+        {
+            return (books.Where(x => x.Id == id).Count() == 1);
         }
 
         public static ModelStore LoadFrom(TextReader reader)
@@ -63,8 +86,8 @@ namespace NezarkaBookstore
                                 Console.WriteLine("Data error.");
                                 return null;
                             }
-                            if (Book.TryParse(tokens[1],tokens[2], tokens[3], tokens[4], out Book b))
-                            {
+                            if (Book.TryParse(tokens[1], tokens[2], tokens[3], tokens[4], out Book b,  store))
+                            {                               
                                 store.books.Add(b);
                             }
                             else //parse failed, number was expected
@@ -79,7 +102,7 @@ namespace NezarkaBookstore
                                 Console.WriteLine("Data error.");
                                 return null;
                             }
-                            if (Customer.TryParse(tokens[1], tokens[2], tokens[3], out Customer c))
+                            if (Customer.TryParse(tokens[1], tokens[2], tokens[3], out Customer c, store))
                             {
                                 store.customers.Add(c);
                             }
@@ -142,14 +165,25 @@ namespace NezarkaBookstore
         public string Author { get; set; }
         public decimal Price { get; set; }
 
-        public static bool TryParse(string id1, string title2, string author3, string price4, out Book b)
+        public static bool TryParse(string id1, string title2, string author3, string price4, out Book b, ModelStore store)
         {
             if(!Int32.TryParse(id1, out int id))
             {
                 b = null;
                 return false;
             }
+            //check bookId duplicity
+            if (store.IsBook(id) || id<0)
+            {
+                b = null;
+                return false;
+            }
             if(!decimal.TryParse(price4, out decimal price))
+            {
+                b = null;
+                return false;
+            }
+            if (price < 0)
             {
                 b = null;
                 return false;
@@ -166,7 +200,7 @@ namespace NezarkaBookstore
 
     }
 
-    class Customer
+    public class Customer
     {
         private ShoppingCart shoppingCart;
 
@@ -174,6 +208,18 @@ namespace NezarkaBookstore
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
+        public List<ShoppingCartItem> GetCart()
+        {
+            return ShoppingCart.Items;
+        }
+        public int CountItemsInCart()
+        {
+            if (shoppingCart == null)
+            {
+                return 0;
+            }
+            return shoppingCart.Items.Count;
+        }
         public ShoppingCart ShoppingCart
         {
             get
@@ -189,9 +235,14 @@ namespace NezarkaBookstore
                 shoppingCart = value;             
             }
         }
-        public static bool TryParse(string id1, string name2, string surname3, out Customer c)
+        public static bool TryParse(string id1, string name2, string surname3, out Customer c,ModelStore store)
         {
             if (!Int32.TryParse(id1, out int id))
+            {
+                c = null;
+                return false;
+            }
+            if (store.IsCustomer(id) || id<0)
             {
                 c = null;
                 return false;
@@ -207,7 +258,7 @@ namespace NezarkaBookstore
         }
     }
 
-    class ShoppingCartItem
+    public class ShoppingCartItem
     {
         public int BookId { get; set; }
         public int Count { get; set; }
@@ -230,6 +281,11 @@ namespace NezarkaBookstore
                 s = null;
                 return false;
             }
+            if (count < 0)
+            {
+                s = null;
+                return false;
+            }
             s = new ShoppingCartItem
             {
                 BookId = bookId,
@@ -239,9 +295,49 @@ namespace NezarkaBookstore
         }
     }
 
-    class ShoppingCart
+    public class ShoppingCart
     {
         public int CustomerId { get; set; }
         public List<ShoppingCartItem> Items = new List<ShoppingCartItem>();
+
+        public bool ContainsBook(int BookId)
+        {
+           return (Items.Where(x => x.BookId == BookId).Count() == 1);
+        }
+
+        public void AddItem(int bookId)
+        {
+            if (ContainsBook(bookId))
+            {
+                ShoppingCartItem item = Items.Find(x => x.BookId == bookId);
+                item.Count++;
+            }
+            else
+            {
+                ShoppingCartItem newItem = new ShoppingCartItem()
+                {
+                    BookId = bookId,
+                    Count = 1,
+                };
+                Items.Add(newItem);
+            }
+        }
+        public bool RemoveItem(int bookId)
+        {
+            if (ContainsBook(bookId))
+            {
+                ShoppingCartItem item = Items.Find(x => x.BookId == bookId);
+                if(item.Count > 1)
+                {
+                    item.Count--;
+                }
+                else
+                {
+                    Items.Remove(item);
+                }
+                return true;
+            }
+            return false;
+        }
     }
 }
