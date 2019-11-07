@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>Nezarka.net: Online Shopping for Books</title>
+</head>
+<body>
+	<style type="text/css">
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		table {
+			margin-bottom: 10px;
+		}
+		pre {
+			line-height: 70%;
+		}
+	</style>
+	<h1><pre>  v,<br />Nezarka.NET: Online Shopping for Books</pre></h1>
+	Kachna, here is your menu:
+	<table>
+		<tr>
+			<td><a href="/Books">Books</a></td>
+			<td><a href="/ShoppingCart">Cart (42)</a></td>
+		</tr>
+	</table>
+	Our books for you:
+	<table>
+		<tr>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/0">Title0</a><br />
+				Author: Author0<br />
+				Price: 0 EUR &lt;<a href="/ShoppingCart/Add/0">Buy</a>&gt;
+			</td>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/1">Title1</a><br />
+				Author: Author1<br />
+				Price: 1 EUR &lt;<a href="/ShoppingCart/Add/1">Buy</a>&gt;
+			</td>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/2">Title2</a><br />
+				Author: Author2<br />
+				Price: 2 EUR &lt;<a href="/ShoppingCart/Add/2">Buy</a>&gt;
+			</td>
+		</tr>
+		<tr>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/3">Title3</a><br />
+				Author: Author3<br />
+				Price: 3 EUR &lt;<a href="/ShoppingCart/Add/3">Buy</a>&gt;
+			</td>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/4">Title4</a><br />
+				Author: Author4<br />
+				Price: 4 EUR &lt;<a href="/ShoppingCart/Add/4">Buy</a>&gt;
+			</td>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/5">Title5</a><br />
+				Author: Author5<br />
+				Price: 5 EUR &lt;<a href="/ShoppingCart/Add/5">Buy</a>&gt;
+			</td>
+		</tr>
+		<tr>
+			<td style="padding: 10px;">
+				<a href="/Books/Detail/6">Title6</a><br />
+				Author: Author6<br />
+				Price: 6 EUR &lt;<a href="/ShoppingCart/Add/6">Buy</a>&gt;
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

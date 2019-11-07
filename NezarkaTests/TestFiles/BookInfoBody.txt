@@ -1,0 +1,9 @@
+	Book details:
+	<h2>HP</h2>
+	<p style="margin-left: 20px">
+	Author: JKR<br />
+	Price: 4.2 EUR<br />
+	</p>
+	<h3>&lt;<a href="/ShoppingCart/Add/3">Buy this book</a>&gt;</h3>
+</body>
+</html>

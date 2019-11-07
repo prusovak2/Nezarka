@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="utf-8" />
+	<title>Nezarka.net: Online Shopping for Books</title>
+</head>
+<body>
+	<style type="text/css">
+		table, th, td {
+			border: 1px solid black;
+			border-collapse: collapse;
+		}
+		table {
+			margin-bottom: 10px;
+		}
+		pre {
+			line-height: 70%;
+		}
+	</style>
+	<h1><pre>  v,<br />Nezarka.NET: Online Shopping for Books</pre></h1>
+	Kachna, here is your menu:
+	<table>
+		<tr>
+			<td><a href="/Books">Books</a></td>
+			<td><a href="/ShoppingCart">Cart (8)</a></td>
+		</tr>
+	</table>
+	Your shopping cart:
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Count</th>
+			<th>Price</th>
+			<th>Actions</th>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/150">Title Book1</a></td>
+			<td>10</td>
+			<td>10 * 0 = 0 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/150">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/75">Title Book3</a></td>
+			<td>160</td>
+			<td>160 * 16 = 2560 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/75">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/52">Title Book5</a></td>
+			<td>310</td>
+			<td>310 * 34 = 10540 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/52">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/44">Title Book7</a></td>
+			<td>460</td>
+			<td>460 * 54 = 24840 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/44">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/42">Title Book9</a></td>
+			<td>610</td>
+			<td>610 * 76 = 46360 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/42">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/45">Title Book11</a></td>
+			<td>760</td>
+			<td>760 * 100 = 76000 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/45">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/52">Title Book5</a></td>
+			<td>910</td>
+			<td>910 * 34 = 30940 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/52">Remove</a>&gt;</td>
+		</tr>
+		<tr>
+			<td><a href="/Books/Detail/61">Title Book15</a></td>
+			<td>1060</td>
+			<td>1060 * 154 = 163240 EUR</td>
+			<td>&lt;<a href="/ShoppingCart/Remove/61">Remove</a>&gt;</td>
+		</tr>
+	</table>
+	Total price of all items: 354480 EUR
+</body>
+</html>
